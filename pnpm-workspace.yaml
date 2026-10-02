@@ -1,0 +1,18 @@
+# Single-package workspace. `overrides` pins the harness meta-package that pulls
+# the whole DSH dependency closure, so a fresh clone typechecks against the same
+# 0.2.0-rc.2 contract this plugin was written for instead of drifting to a newer
+# prerelease. `allowBuilds: false` keeps the install non-interactive: the native
+# peers it names are never used by this plugin, and pnpm otherwise fails the
+# install with ERR_PNPM_IGNORED_BUILDS.
+packages:
+  - "."
+
+overrides:
+  "@deepseek-ai/dsh": "0.2.0-rc.2"
+
+allowBuilds:
+  "@deepseek-ai/dsh-subprocess-local": false
+  "@google/genai": false
+  koffi: false
+  node-pty: false
+  protobufjs: false

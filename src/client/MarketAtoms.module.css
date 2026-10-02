@@ -1,0 +1,192 @@
+/* Shared atoms of the marketplace panel: avatar, status chips, source-health
+   line, loading skeleton. Every colour is a live DSH theme token, so the same
+   rules read correctly under the light and the dark theme. */
+
+/* ── Avatar ──────────────────────────────────────────────────────────────── */
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--dsw-alias-border-l1);
+  box-sizing: border-box;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+.avatarImage {
+  display: block;
+  object-fit: cover;
+  background: var(--dsw-alias-bg-overlay);
+}
+
+/* Deterministic identity tints. Each tone paints one accent token and takes the
+   page background as its foreground, which is the inverted pair in both themes. */
+.tone0 { background: var(--dsw-alias-brand-primary); color: var(--dsw-alias-bg-base); }
+.tone1 { background: var(--dsw-alias-state-success-primary); color: var(--dsw-alias-bg-base); }
+.tone2 { background: var(--dsw-alias-state-warn-primary); color: var(--dsw-alias-bg-base); }
+.tone3 { background: var(--dsw-alias-state-error-primary); color: var(--dsw-alias-bg-base); }
+.tone4 { background: var(--dsw-alias-state-idle-primary); color: var(--dsw-alias-bg-base); }
+.tone5 {
+  background: color-mix(in oklab, var(--dsw-alias-brand-primary) 45%, var(--dsw-alias-state-warn-primary));
+  color: var(--dsw-alias-bg-base);
+}
+
+/* ── Chips ───────────────────────────────────────────────────────────────── */
+
+.chip {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 7px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.chipIcon {
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+.chipSuccess {
+  border-color: color-mix(in oklab, var(--dsw-alias-state-success-primary) 34%, transparent);
+  background: color-mix(in oklab, var(--dsw-alias-state-success-primary) 14%, transparent);
+  color: color-mix(in oklab, var(--dsw-alias-state-success-primary) 72%, var(--dsw-alias-label-primary));
+}
+
+.chipDanger {
+  border-color: color-mix(in oklab, var(--dsw-alias-state-error-primary) 34%, transparent);
+  background: color-mix(in oklab, var(--dsw-alias-state-error-primary) 14%, transparent);
+  color: color-mix(in oklab, var(--dsw-alias-state-error-primary) 72%, var(--dsw-alias-label-primary));
+}
+
+.chipWarn {
+  border-color: color-mix(in oklab, var(--dsw-alias-state-warn-primary) 38%, transparent);
+  background: color-mix(in oklab, var(--dsw-alias-state-warn-primary) 16%, transparent);
+  color: color-mix(in oklab, var(--dsw-alias-state-warn-primary) 62%, var(--dsw-alias-label-primary));
+}
+
+.chipNeutral {
+  border-color: var(--dsw-alias-border-l2);
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 6%, transparent);
+  color: var(--dsw-alias-label-secondary);
+}
+
+.chipBrand {
+  border-color: color-mix(in oklab, var(--dsw-alias-brand-primary) 30%, transparent);
+  background: color-mix(in oklab, var(--dsw-alias-brand-primary) 12%, transparent);
+  color: var(--dsw-alias-brand-primary);
+}
+
+/* ── Source health ───────────────────────────────────────────────────────── */
+
+.health {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  min-width: 0;
+}
+
+.healthLabel {
+  color: var(--dsw-alias-label-secondary);
+}
+
+.healthItem {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.healthSource {
+  color: var(--dsw-alias-label-primary);
+  font-weight: 600;
+}
+
+.healthStatus {
+  color: var(--dsw-alias-label-secondary);
+}
+
+.healthError {
+  overflow: hidden;
+  max-width: 22ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+}
+
+.dotOk { background: var(--dsw-alias-state-success-primary); }
+.dotCached { background: var(--dsw-alias-state-idle-primary); }
+.dotDegraded { background: var(--dsw-alias-state-warn-primary); }
+.dotFailed { background: var(--dsw-alias-state-error-primary); }
+
+/* ── Skeleton ────────────────────────────────────────────────────────────── */
+
+.skeletonCard {
+  display: flex;
+  min-height: 208px;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--dsw-alias-border-l1);
+  border-radius: 12px;
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.skeletonBlock {
+  border-radius: 6px;
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 7%, transparent);
+}
+
+.skeletonHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeletonAvatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+.skeletonLines {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.shimmer {
+  animation: skillsHubPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skillsHubPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer { animation: none; }
+}

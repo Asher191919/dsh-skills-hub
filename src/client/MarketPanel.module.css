@@ -1,0 +1,495 @@
+/* The 「技能市场」 panel: a fixed top band that decides *what* is listed and a
+   scrolling results region under it. Every colour is a live DSH theme token, so
+   the same rules are correct under the light and the dark theme. */
+
+.panel {
+  display: flex;
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--dsw-alias-bg-base);
+  box-sizing: border-box;
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+}
+
+/* ── Top band ────────────────────────────────────────────────────────────── */
+
+.band {
+  display: flex;
+  min-height: 0;
+  flex: 0 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 24px 14px;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--dsw-alias-border-l1);
+  background: var(--dsw-alias-bg-base);
+}
+
+.header {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mark {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--dsw-alias-brand-primary);
+  color: var(--dsw-alias-bg-base);
+}
+
+.headText {
+  min-width: 0;
+  flex: 1;
+}
+
+.title {
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 30px;
+}
+
+.subtitle {
+  max-width: 68ch;
+  margin: 3px 0 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.refresh {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.refresh:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 6%, transparent);
+}
+
+.refresh:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+.refreshLabel {
+  white-space: nowrap;
+}
+
+.spin {
+  animation: skillsHubSpin 1s linear infinite;
+}
+
+@keyframes skillsHubSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Advisory banner ─────────────────────────────────────────────────────── */
+
+.warn {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 12px 11px 14px;
+  border: 1px solid color-mix(in oklab, var(--dsw-alias-state-warn-primary) 46%, transparent);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--dsw-alias-state-warn-primary) 13%, var(--dsw-alias-bg-layer-1));
+}
+
+.warnIcon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: color-mix(in oklab, var(--dsw-alias-state-warn-primary) 70%, var(--dsw-alias-label-primary));
+}
+
+.warnText {
+  min-width: 0;
+  flex: 1;
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.warnTitle {
+  font-weight: 700;
+}
+
+.warnClose {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  cursor: pointer;
+}
+
+.warnClose:hover {
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 8%, transparent);
+  color: var(--dsw-alias-label-primary);
+}
+
+/* ── Search + filters ────────────────────────────────────────────────────── */
+
+.toolbar {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.search {
+  display: flex;
+  min-width: 200px;
+  flex: 1 1 240px;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 8px 0 11px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-layer-1);
+  box-sizing: border-box;
+}
+
+.search:focus-within {
+  border-color: var(--dsw-alias-brand-primary);
+  outline: 2px solid color-mix(in oklab, var(--dsw-alias-brand-primary) 26%, transparent);
+  outline-offset: 0;
+}
+
+.searchIcon {
+  flex-shrink: 0;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.searchInput {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 13.5px;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--dsw-alias-label-secondary);
+}
+
+/* The panel renders its own clear control, so the engine's decorations on
+   `input[type=search]` would be a second, differently styled one. */
+.searchInput::-webkit-search-cancel-button,
+.searchInput::-webkit-search-decoration {
+  display: none;
+  appearance: none;
+}
+
+.searchClear {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  cursor: pointer;
+}
+
+.searchClear:hover {
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 8%, transparent);
+  color: var(--dsw-alias-label-primary);
+}
+
+.select {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.selectControl {
+  height: 34px;
+  padding: 0 26px 0 10px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  appearance: none;
+  background: var(--dsw-alias-bg-layer-1);
+  color: var(--dsw-alias-label-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.selectChevron {
+  position: absolute;
+  right: 8px;
+  color: var(--dsw-alias-label-secondary);
+  pointer-events: none;
+}
+
+/* ── Count line ──────────────────────────────────────────────────────────── */
+
+.countRow {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+}
+
+.count {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.countMeta {
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.filterSummary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12.5px;
+}
+
+.linkButton {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--dsw-alias-brand-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12.5px;
+  text-decoration: underline;
+}
+
+/* ── Notices ─────────────────────────────────────────────────────────────── */
+
+.notice {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.noticeText {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+
+.noticeSuccess {
+  border: 1px solid color-mix(in oklab, var(--dsw-alias-state-success-primary) 40%, transparent);
+  background: color-mix(in oklab, var(--dsw-alias-state-success-primary) 10%, transparent);
+}
+
+.noticeError {
+  border: 1px solid color-mix(in oklab, var(--dsw-alias-state-error-primary) 40%, transparent);
+  background: color-mix(in oklab, var(--dsw-alias-state-error-primary) 10%, transparent);
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.noticeClose {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.noticeClose:hover {
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 8%, transparent);
+  opacity: 1;
+}
+
+/* ── Results region ──────────────────────────────────────────────────────── */
+
+.results {
+  min-height: 0;
+  flex: 1;
+  padding: 16px 24px 28px;
+  overflow-y: auto;
+}
+
+.grid {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+  gap: 14px;
+  list-style: none;
+}
+
+.gridItem {
+  display: flex;
+  min-width: 0;
+}
+
+/* The card is the grid cell's only child, whichever CSS module owns it. */
+.gridItem > * {
+  min-width: 0;
+  flex: 1;
+}
+
+.moreRow {
+  display: flex;
+  justify-content: center;
+  padding-top: 18px;
+}
+
+.more {
+  height: 34px;
+  padding: 0 18px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.more:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 6%, transparent);
+}
+
+.more:disabled {
+  cursor: progress;
+  opacity: 0.65;
+}
+
+/* ── Region states ───────────────────────────────────────────────────────── */
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 52px 24px;
+  border: 1px dashed var(--dsw-alias-border-l2);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.stateIcon {
+  color: var(--dsw-alias-label-secondary);
+}
+
+.stateIconError {
+  color: var(--dsw-alias-state-error-primary);
+}
+
+.stateTitle {
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stateText {
+  max-width: 46ch;
+  margin: 0;
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.stateAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  margin-top: 4px;
+  padding: 0 14px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+.stateAction:hover {
+  background: color-mix(in oklab, var(--dsw-alias-label-primary) 6%, transparent);
+}
+
+/* ── Focus rings ─────────────────────────────────────────────────────────── */
+
+.refresh:focus-visible,
+.warnClose:focus-visible,
+.searchClear:focus-visible,
+.selectControl:focus-visible,
+.more:focus-visible,
+.stateAction:focus-visible,
+.linkButton:focus-visible,
+.noticeClose:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spin {
+    animation: none;
+  }
+}

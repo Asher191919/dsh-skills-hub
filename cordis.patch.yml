@@ -1,0 +1,26 @@
+# dsh-skills-hub bundle patch: mounts the Skills Hub plugin into the host
+# composition of a dsh profile. The plugin serves the marketplace API on the
+# host's Web server, contributes the `skill_market_*` tools to the shared
+# `tools` registry, and ships a browser client half that renders the
+# 「技能市场」 panel in the web GUI.
+#
+# Install: `dsh plugin --profile <name> add <this package>` (npm or a local
+# path). The `dsh plugin` command pnpm-installs the package into the profile
+# and reconciles it into the profile's `dsh.profile.bundles` layer list.
+- insert:
+    - id: skills-hub
+      # Node-resolvable package name — must stay in sync with package.json
+      # `name`. Quoted because `@` is a reserved indicator in YAML and cannot
+      # open a plain scalar.
+      name: '@nanmicoder/dsh-skills-hub'
+      config:
+        # Where an install lands: `user` → <dsh home>/skills (all workspaces),
+        # `project` → <workspace>/.dsh/skills (this workspace only).
+        installScope: user
+        # Upstream registry bases; override to point at a mirror or a fixture.
+        clawhubBase: https://clawhub.ai
+        skillhubBase: https://api.skillhub.cn
+        # Catalog cache lifetime in milliseconds.
+        cacheTtlMs: 300000
+        # Upstream request timeout in milliseconds.
+        timeoutMs: 15000
