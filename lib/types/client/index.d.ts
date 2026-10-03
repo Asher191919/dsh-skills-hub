@@ -1,5 +1,5 @@
 /**
- * Browser half of `@nanmicoder/dsh-skills-hub`.
+ * Browser half of `@asher191919/dsh-skills-hub`.
  *
  * Two contributions, both through `ctx.slots.inject` (which waits for the owning
  * plugin's slot declaration and re-runs on every re-declaration, so HMR and load

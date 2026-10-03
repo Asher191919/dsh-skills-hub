@@ -23,7 +23,7 @@
 ## 安装
 
 ```sh
-dsh plugin --profile <name> add @nanmicoder/dsh-skills-hub
+dsh plugin --profile <name> add @asher191919/dsh-skills-hub
 ```
 
 或直接从 Git 安装：

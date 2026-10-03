@@ -17,9 +17,9 @@
  *    `$DSH_HOME` (else `~/.dsh`) and the workspace comes from the workspace
  *    registry service.
  *
- * Installation (bundle): `dsh plugin --profile <name> add @nanmicoder/dsh-skills-hub`.
+ * Installation (bundle): `dsh plugin --profile <name> add @asher191919/dsh-skills-hub`.
  *
- * @module @nanmicoder/dsh-skills-hub
+ * @module @asher191919/dsh-skills-hub
  */
 import type { Context } from '@deepseek-ai/cordis';
 import z from '@deepseek-ai/schemastery';

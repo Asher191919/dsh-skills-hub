@@ -27,7 +27,7 @@ and theme tokens.
 ## Install
 
 ```sh
-dsh plugin --profile <name> add @nanmicoder/dsh-skills-hub
+dsh plugin --profile <name> add @asher191919/dsh-skills-hub
 ```
 
 Or straight from Git:

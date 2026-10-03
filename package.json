@@ -1,5 +1,5 @@
 {
-  "name": "@nanmicoder/dsh-skills-hub",
+  "name": "@asher191919/dsh-skills-hub",
   "version": "0.1.0",
   "description": "Skills Hub for DeepSeek Harness: a skill marketplace panel in the web GUI — browse, search, filter and install skills from ClawHub and SkillHub",
   "type": "module",
@@ -27,9 +27,8 @@
   ],
   "license": "MIT",
   "author": {
-    "name": "程序员阿江 (Relakkes)",
-    "email": "relakkes@gmail.com",
-    "url": "https://github.com/NanmiCoder"
+    "name": "Asher191919",
+    "url": "https://github.com/Asher191919"
   },
   "homepage": "https://github.com/Asher191919/dsh-skills-hub#readme",
   "repository": {
